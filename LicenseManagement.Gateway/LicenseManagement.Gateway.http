@@ -1,0 +1,6 @@
+@LicenseManagement.Gateway_HostAddress = http://localhost:5177
+
+GET {{LicenseManagement.Gateway_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

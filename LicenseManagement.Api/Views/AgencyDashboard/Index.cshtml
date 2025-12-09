@@ -1,0 +1,94 @@
+﻿@model List<LicenseManagement.Api.Services.LicenseViewModel>
+@{
+    ViewData["Title"] = "Agency Dashboard";
+    var total = Model.Count;
+    var pending = Model.Count(x => x.Status == "Pending");
+    var approved = Model.Count(x => x.Status == "Approved");
+}
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <h6 class="text-uppercase text-muted">Total Licenses</h6>
+                <h3 class="fw-bold">@total</h3>
+                <p class="text-muted small mb-0">All active applications for this tenant.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <h6 class="text-uppercase text-muted">Pending Review</h6>
+                <h3 class="fw-bold text-warning">@pending</h3>
+                <p class="text-muted small mb-0">Awaiting agency action.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <h6 class="text-uppercase text-muted">Approved</h6>
+                <h3 class="fw-bold text-success">@approved</h3>
+                <p class="text-muted small mb-0">Ready for operation and renewal tracking.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="mb-0">License Applications</h5>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> New License
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0 align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Applicant</th>
+                    <th>License Type</th>
+                    <th>Status</th>
+                    <th>Expiry</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="4" class="text-center text-muted py-4">
+                            No licenses yet. Use <strong>New License</strong> to create one.
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ApplicantName</td>
+                            <td>@item.LicenseType</td>
+                            <td>
+                                @if (item.Status == "Approved")
+                                {
+                                    <span class="badge bg-success">Approved</span>
+                                }
+                                else if (item.Status == "Pending")
+                                {
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">@item.Status</span>
+                                }
+                            </td>
+                            <td>@item.ExpiryDate?.ToString("yyyy-MM-dd")</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

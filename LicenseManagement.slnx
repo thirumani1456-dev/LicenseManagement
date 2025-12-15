@@ -1,7 +1,4 @@
 <Solution>
-  <Folder Name="/Solution Items/">
-    <File Path="README.md" />
-  </Folder>
   <Project Path="DocumentService/DocumentService.csproj" />
   <Project Path="LicenseManagement.Api/LicenseManagement.Api.csproj" />
   <Project Path="LicenseManagement.Gateway/LicenseManagement.Gateway.csproj" />
